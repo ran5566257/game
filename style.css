@@ -1,0 +1,50 @@
+body {
+    background: #222;
+    color: #fff;
+    font-family: "微软雅黑", Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 20px 0 10px 0;
+    font-size: 2rem;
+}
+
+#game-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 8px;
+}
+
+#player-info {
+    text-align: left;
+    font-size: 1rem;
+    min-width: 200px;
+    background: #222a;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#log {
+    text-align: left;
+    font-size: .95rem;
+    width: 220px;
+    min-height: 40px;
+    background: #333a;
+    border-radius: 6px;
+    padding: 8px;
+    overflow-y: auto;
+    max-height: 80px;
+}
+
+#gameCanvas {
+    background: #111;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
