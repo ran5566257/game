@@ -80,7 +80,7 @@ function step() {
     // 判断是否撞到自己
     if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
         alive = false;
-        addLog("游戏结束！王鹏撞到了自己！");
+        addLog("哎呀\n游戏结束！王鹏撞到了自己！");
         draw();
         return;
     }
