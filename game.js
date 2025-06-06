@@ -6,20 +6,8 @@ const logDiv = document.getElementById('log');
 const GRID_SIZE = 20;
 const CELL_SIZE = canvas.width / GRID_SIZE;
 
-let snake = [
-    {x: 10, y: 10},
-    {x: 9, y: 10},
-    {x: 8, y: 10}
-];
-let direction = {x: 1, y: 0};
-let nextDirection = {x: 1, y: 0};
-let food = spawnFood();
-let score = 0;
-let alive = true;
-let speed = 120;
-let timer = null;
+let snake, direction, nextDirection, food, score, alive, speed, timer;
 
-// 主角名字
 const mainCharacter = "王鹏";
 
 function spawnFood() {
@@ -80,7 +68,7 @@ function step() {
     // 判断是否撞到自己
     if (snake.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
         alive = false;
-        addLog("哎呀\n游戏结束！王鹏撞到了自己！");
+        addLog("游戏结束！王鹏撞到了自己！");
         draw();
         return;
     }
@@ -108,6 +96,26 @@ function step() {
     updatePlayerInfo();
 }
 
+function resetGame() {
+    snake = [
+        {x: 10, y: 10},
+        {x: 9, y: 10},
+        {x: 8, y: 10}
+    ];
+    direction = {x: 1, y: 0};
+    nextDirection = {x: 1, y: 0};
+    food = spawnFood();
+    score = 0;
+    alive = true;
+    speed = 120;
+    if (timer) clearInterval(timer);
+    addLog("游戏重新开始！使用方向键或按钮控制王鹏移动，吃食物变长，撞到自己则游戏结束！");
+    updatePlayerInfo();
+    draw();
+    timer = setInterval(step, speed);
+}
+
+// 键盘控制
 window.addEventListener('keydown', e => {
     if (!alive) return;
     let key = e.key;
@@ -117,8 +125,24 @@ window.addEventListener('keydown', e => {
     else if (key === 'ArrowRight' && direction.x !== -1) nextDirection = {x: 1, y: 0};
 });
 
+// 页面按钮控制
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn-up').onclick = () => {
+        if (direction.y !== 1) nextDirection = {x: 0, y: -1};
+    };
+    document.getElementById('btn-down').onclick = () => {
+        if (direction.y !== -1) nextDirection = {x: 0, y: 1};
+    };
+    document.getElementById('btn-left').onclick = () => {
+        if (direction.x !== 1) nextDirection = {x: -1, y: 0};
+    };
+    document.getElementById('btn-right').onclick = () => {
+        if (direction.x !== -1) nextDirection = {x: 1, y: 0};
+    };
+    document.getElementById('btn-restart').onclick = () => {
+        resetGame();
+    };
+});
+
 // 初始化
-addLog("使用方向键控制王鹏移动，吃食物变长，撞到自己则游戏结束！");
-updatePlayerInfo();
-draw();
-timer = setInterval(step, speed);
+resetGame();
